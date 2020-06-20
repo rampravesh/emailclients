@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'emailclients';
+  signIn: boolean = false;
+  constructor(private authService: AuthService) { }
+
+  ngOnInit() {
+    this.authService.signedIn$.subscribe((signIn) => {
+      this.signIn = signIn
+    })
+    this.authService.checkAuth().subscribe(() => { });
+  }
 }
